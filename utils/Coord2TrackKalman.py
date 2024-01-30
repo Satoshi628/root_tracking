@@ -226,8 +226,7 @@ def global_association_solver(track, param_dict):
         vec_norm = torch.norm(last2first_vec, dim=-1)
         vec_norm_th1 = param_dict["speed_range"][0] * torch.clamp(diff_time, min=1) * torch.norm(move_vector[idx: idx + 1], dim=-1)
         vec_norm_th2 = param_dict["speed_range"][1] * torch.clamp(diff_time, min=1) * torch.norm(move_vector[idx: idx + 1], dim=-1)
-        # dist_flag = (vec_norm_th1 <= vec_norm) & (vec_norm <= vec_norm_th2)
-        dist_flag = vec_norm <= vec_norm_th2
+        dist_flag = (vec_norm_th1 <= vec_norm) & (vec_norm <= vec_norm_th2)
 
         lf_connect_flag = (diff_time > 0) & (cos_fai >= cos_theta) & dist_flag & (torch.norm(move_vector[idx], dim=-1) != 0)
         #自身とのつながりは無くす
