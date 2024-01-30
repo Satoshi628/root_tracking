@@ -8,15 +8,15 @@ from tqdm import tqdm
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+import matplotlib.animation as animation
 from IPython.display import HTML
-from IPython.display import display
 
 #----- 自作ライブラリ -----#
 # None
 
 
 def Visualization_Tracking(images_gene, tracks):
+    
     track_ids = np.unique(tracks[:, 1])
     random_color = {int(track_id): [random.randint(128, 255) for _ in range(3)] for track_id in track_ids}
 
@@ -45,19 +45,6 @@ def Visualization_Tracking(images_gene, tracks):
         images.append(image)
     return images
 
-
-def makeAnimation(frames, resize_rate=2, dpi=72):
-    frames = [cv2.resize(image, [image.shape[1]//resize_rate,image.shape[0]//resize_rate]) for image in frames]
-    plt.figure(figsize=(frames[0].shape[1]/dpi, frames[0].shape[0]/dpi), dpi=dpi)
-    patch = plt.imshow(frames[0])
-    plt.axis('off')
-    plt.subplots_adjust(left=0, right=1, bottom=0, top=1) #この1行を入れる
-
-    def animate(i):
-        patch.set_data(frames[i])
-
-    anim = FuncAnimation(plt.gcf(), animate, frames=len(frames), interval=1000/10.)
-    display(HTML(anim.to_jshtml()))
 
 def VisualizationTrajectory(img, tracks):
     img = img.astype(np.uint8)

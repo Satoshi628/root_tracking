@@ -30,7 +30,6 @@ def save_track_video(path, video, frame=10):
     
     WH = video[0].shape[:2][::-1]
     fmt = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')  # ファイル形式(ここではmp4)
-    #writer = cv2.VideoWriter('result/video/raw_track.mp4', fmt, frame, (640, 480))
     writer = cv2.VideoWriter(os.path.join(path, 'track_video.mp4'), fmt, frame, WH)
 
     for image in video:
