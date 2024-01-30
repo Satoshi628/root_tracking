@@ -26,7 +26,7 @@ def VisualizationTrajectory(img, tracks):
         past_point = None
         for p in point:
             if past_point is not None:
-                cv2.arrowedLine(img, past_point, p, use_color, thickness=2, tipLength=0.4)
+                cv2.line(img, past_point, p, use_color, thickness=2, lineType=cv2.LINE_AA)
             past_point = p
 
     return img
