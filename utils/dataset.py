@@ -84,4 +84,22 @@ def dataloader(path="/path/file.avi"):
     img = torch.stack(images, dim=1)
     yield img[None]
 
+def raw_dataloader(path="/path/file.avi"):
+    
+    cap = cv2.VideoCapture(os.path.join(path))
 
+    if not cap.isOpened():
+        # 正常に読み込めたのかチェックする
+        # 読み込めたらTrue、失敗ならFalse
+        print("動画の読み込み失敗")
+        sys.exit()
+
+    while True:
+        # read()でフレーム画像が読み込めたかを示すbool、フレーム画像の配列ndarrayのタプル
+        is_image, frame_img = cap.read()
+        if is_image:
+            # 画像を保存
+            yield frame_img[:, :, [2, 1, 0]]
+        else:
+            # フレーム画像が読込なかったら終了
+            break
